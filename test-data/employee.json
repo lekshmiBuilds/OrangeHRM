@@ -1,0 +1,10 @@
+{
+  "employee": {
+    "firstName": "John",
+    "middleName": "A",
+    "lastName": "Johnson",
+    "profilePicture": "./test-data/profile.jpg",
+    "jobTitle": "QA Engineer",
+    "employmentStatus": "Full-Time Permanent"
+  }
+}
