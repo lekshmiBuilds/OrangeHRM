@@ -2,13 +2,15 @@
 
 ## 📌 Project Overview
 
-This project is an end-to-end UI and API automation framework built using **Playwright with TypeScript** following the **Page Object Model (POM)** design pattern.
+This project is an end-to-end UI and API automation framework built using **Playwright** with **TypeScript**, following the **Page Object Model (POM)** design pattern.
 
-The framework automates major OrangeHRM workflows such as Login, User Management, Employee Management, Logout, and API validation while following clean coding practices and reusable components.
+The framework automates key OrangeHRM workflows such as user authentication, employee management, user management, logout, and API validation while following clean coding practices, reusable components, and modular architecture.
+
+The framework uses **Global Setup** together with **Playwright Storage State** to authenticate once before the test execution and reuse the authenticated session across all applicable tests.
 
 ---
 
-## 🚀 Tech Stack
+# 🚀 Tech Stack
 
 - Playwright
 - TypeScript
@@ -17,7 +19,7 @@ The framework automates major OrangeHRM workflows such as Login, User Management
 
 ---
 
-## 📂 Project Structure
+# 📂 Project Structure
 
 ```
 OrangeHRM
@@ -30,16 +32,23 @@ OrangeHRM
 │   ├── AddUserPage.ts
 │   ├── PIMPage.ts
 │   ├── AddEmployeePage.ts
+│   ├── EmployeeDetailsPage.ts
+│   ├── DeleteEmployeePage.ts
 │   └── LogoutPage.ts
 │
 ├── tests
-│   ├── auth.setup.ts
-│   ├── loginpage.spec.ts
-│   ├── adminpage.spec.ts
-│   ├── adduser.spec.ts
-│   ├── addEmployee.spec.ts
-│   ├── logout.spec.ts
-│   └── apiValidation.spec.ts
+│   ├── Authentication
+│   │     ├── loginpage.spec.ts
+│   │     └── logout.spec.ts
+│   │
+│   ├── Admin
+│   │     └── adduser.spec.ts
+│   │
+│   ├── Employee E2E
+│   │     └── addeditdeleteEmployee.spec.ts
+│   │
+│   └── API
+│         └── apiValidation.spec.ts
 │
 ├── test-data
 │   ├── login.json
@@ -47,36 +56,72 @@ OrangeHRM
 │   ├── employee.json
 │   └── profile.jpg
 │
+├── playwright
+│   └── .auth
+│        └── user.json
+│
+├── playwright-report
+├── test-results
+│
+├── global-setup.ts
 ├── playwright.config.ts
 ├── package.json
+├── tsconfig.json
 ├── README.md
-└── playwright-report
+└── .gitignore
 ```
 
 ---
 
-## 🏗 Framework Design
+# 🏗 Framework Design
 
-The framework follows the **Page Object Model (POM)**.
+This framework follows the **Page Object Model (POM)** design pattern.
 
-Each page is implemented as an individual class responsible for interacting with only that page.
+- Each page is implemented as an individual Page Object class.
+- Every page contains only the locators and methods related to that page.
+- A reusable **BasePage** provides common functionality shared across multiple pages.
+- Test data is externalized using JSON files.
+- Authentication is handled centrally using **Global Setup** and **Storage State**, reducing test execution time.
 
-A common **BasePage** contains reusable functionality shared across all pages.
+This structure improves:
 
-Test data is maintained separately using JSON files to improve maintainability and reusability.
+- Code Reusability
+- Maintainability
+- Scalability
+- Readability
 
 ---
 
-## ✅ Automated Test Scenarios
+# 🔐 Authentication
 
-### Login
+The framework uses **Global Setup** together with **Playwright Storage State**.
 
-- Login using valid credentials
+Before the test suite starts:
+
+1. `global-setup.ts` launches the browser.
+2. Logs into OrangeHRM.
+3. Stores the authenticated session inside:
+
+```
+playwright/.auth/user.json
+```
+
+All subsequent UI tests reuse this authentication state, avoiding repeated login and improving execution speed.
+
+---
+
+# ✅ Automated Test Scenarios
+
+## Authentication
+
+- Login with valid credentials
 - Verify successful login
+- Logout
+- Verify successful logout
 
 ---
 
-### Admin Module
+## Admin Module
 
 - Navigate to Admin
 - Add User
@@ -86,32 +131,28 @@ Test data is maintained separately using JSON files to improve maintainability a
 
 ---
 
-### Employee Module (PIM)
+## Employee Module (PIM)
 
 - Navigate to PIM
 - Add Employee
 - Upload Profile Picture
 - Verify Employee Creation
+- Edit Employee Details
+- Delete Employee
+- Verify Employee Deletion
 
 ---
 
-### Logout
+## API Validation
 
-- Logout successfully
-- Verify redirection to Login page
-
----
-
-### API Validation
-
-- Authenticate using Playwright Storage State
+- Validate Dashboard API
 - Execute authenticated API request
 - Validate HTTP Status Code
-- Validate API response
+- Validate API Response
 
 ---
 
-## 📄 Test Data
+# 📄 Test Data
 
 Test data is maintained separately under the **test-data** folder.
 
@@ -119,39 +160,47 @@ Test data is maintained separately under the **test-data** folder.
 login.json
 users.json
 employee.json
+profile.jpg
 ```
 
-This approach avoids hardcoded values inside test scripts.
+Benefits:
+
+- No hardcoded values
+- Easy maintenance
+- Reusable test data
+- Better scalability
 
 ---
 
-## 🔐 Authentication
-
-The framework uses **Playwright Storage State** for authentication.
-
-A dedicated setup test logs into OrangeHRM once and stores the authenticated session.
-
-All subsequent tests reuse the same authentication state.
-
----
-
-## 📊 Reporting
+# 📊 Reporting
 
 The framework generates:
 
 - HTML Report
-- Screenshots
-- Trace Files
-- Video Recording
+- Screenshots on Failure
+- Video Recording on Failure
+- Trace Files on Failure
+
+View the HTML report using:
+
+```bash
+npx playwright show-report
+```
 
 ---
 
-## ▶️ Installation
+# ▶️ Installation
 
 Clone the repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/lekshmiBuilds/OrangeHRM.git
+```
+
+Navigate to the project
+
+```bash
+cd OrangeHRM
 ```
 
 Install dependencies
@@ -168,7 +217,9 @@ npx playwright install
 
 ---
 
-## ▶️ Execute All Tests
+# ▶️ Execute Tests
+
+## Execute All Tests
 
 ```bash
 npx playwright test
@@ -176,47 +227,47 @@ npx playwright test
 
 ---
 
-## ▶️ Execute Individual Tests
-
-Login Test
+## Execute Login Test
 
 ```bash
-npx playwright test tests/loginpage.spec.ts
-```
-
-Admin Test
-
-```bash
-npx playwright test tests/adminpage.spec.ts
-```
-
-Add User Test
-
-```bash
-npx playwright test tests/adduser.spec.ts
-```
-
-Add Employee Test
-
-```bash
-npx playwright test tests/addEmployee.spec.ts
-```
-
-Logout Test
-
-```bash
-npx playwright test tests/logout.spec.ts
-```
-
-API Validation
-
-```bash
-npx playwright test tests/apiValidation.spec.ts
+npx playwright test tests/Authentication/loginpage.spec.ts
 ```
 
 ---
 
-## 📈 View HTML Report
+## Execute Logout Test
+
+```bash
+npx playwright test tests/Authentication/logout.spec.ts
+```
+
+---
+
+## Execute Admin Test
+
+```bash
+npx playwright test tests/Admin/adduser.spec.ts
+```
+
+---
+
+## Execute Employee E2E Test
+
+```bash
+npx playwright test "tests/Employee E2E/addeditdeleteEmployee.spec.ts"
+```
+
+---
+
+## Execute API Validation Test
+
+```bash
+npx playwright test tests/API/apiValidation.spec.ts
+```
+
+---
+
+# 📈 View HTML Report
 
 ```bash
 npx playwright show-report
@@ -224,33 +275,66 @@ npx playwright show-report
 
 ---
 
-## Features Implemented
-- Page Object Model
+# ⭐ Features Implemented
+
+- Playwright with TypeScript
+- Page Object Model (POM)
 - Base Page
-- Reusable Components
-- JSON Test Data
-- Dynamic Test Data Generation
+- Global Setup
 - Storage State Authentication
+- External JSON Test Data
+- Dynamic Employee ID Generation
 - UI Automation
-- API Automation
+- API Validation
 - HTML Reporting
 - Screenshot Capture
 - Video Recording
-- Trace Generation
+- Trace Collection
+- Modular Project Structure
+- Reusable Methods
 
 ---
 
-## Future Enhancements
-- Cross Browser Execution
-- CI/CD Integration (GitHub Actions / Azure DevOps)
-- Data-driven execution using CSV/Excel
+# 📦 Dependencies
+
+Major dependencies used:
+
+- @playwright/test
+- typescript
+- ts-node
+- @types/node
+
+Install all dependencies using:
+
+```bash
+npm install
+```
+
+---
+
+# 🔮 Future Enhancements
+
+- Cross-browser execution (Firefox, WebKit)
+- Parallel execution optimization
+- CI/CD integration using GitHub Actions or Azure DevOps
 - Allure Reporting
-- Parallel Execution Optimization
+- Data-driven execution using CSV or Excel
+- Environment-specific configuration (.env)
 
 ---
 
-## Author
+# 👩‍💻 Author
 
 **Lekshmi Mahadevan**
+
 Automation QA Engineer
-Playwright | TypeScript | API Testing | End-to-End Automation
+
+**Skills**
+
+- Playwright
+- TypeScript
+- UI Automation
+- API Testing
+- End-to-End Automation
+- Page Object Model (POM)
+- Test Automation Framework Development

@@ -16,16 +16,10 @@ export class EmployeeDetailsPage extends BasePage {
         this.jobTab = page.getByRole('link', { name: 'Job' });
 
         // Job Title dropdown
-        this.jobTitleDropdown = page
-            .locator('label:text("Job Title")')
-            .locator('../..')
-            .locator('.oxd-select-text');
+        this.jobTitleDropdown = page.locator('label:text("Job Title")').locator('../..').locator('.oxd-select-text');
 
         // Employment Status dropdown
-        this.employmentStatusDropdown = page
-            .locator('label:text("Employment Status")')
-            .locator('../..')
-            .locator('.oxd-select-text');
+        this.employmentStatusDropdown = page.locator('label:text("Employment Status")').locator('../..').locator('.oxd-select-text');
 
         // Save button in Job section
         this.saveButton = page.getByRole('button', { name: 'Save' }).first();
@@ -41,7 +35,6 @@ export class EmployeeDetailsPage extends BasePage {
     async selectJobTitle(jobTitle: string): Promise<void> {
 
         await this.jobTitleDropdown.click();
-
         await this.page.getByRole('option', { name: jobTitle }).click();
 
     }
@@ -72,13 +65,9 @@ export class EmployeeDetailsPage extends BasePage {
     ): Promise<void> {
 
         await this.clickJobTab();
-
         await this.selectJobTitle(jobTitle);
-
         await this.selectEmploymentStatus(employmentStatus);
-
         await this.clickSave();
-
         await this.verifyJobUpdated();
 
     }
