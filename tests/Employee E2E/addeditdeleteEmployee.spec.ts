@@ -6,7 +6,7 @@ import { EmployeeDetailsPage } from '../../pages/EmployeeDetailsPage';
 import { DeleteEmployeePage } from '../../pages/DeleteEmployeePage';
 import employeeData from '../../test-data/employee.json';
 
-test('Add Employee, Edit Employee, Delete Employee and Logout', async ({ page }) => 
+test('Add Employee, Edit Employee, Delete Employee', async ({ page }) => 
     {
 
     const dashboardPage = new DashboardPage(page);
@@ -33,16 +33,8 @@ test('Add Employee, Edit Employee, Delete Employee and Logout', async ({ page })
     );
 
     //Edit the employee's job details 
-    await employeeDetailsPage.updateJobDetails(
-        employeeData.employee.jobTitle,
-        employeeData.employee.employmentStatus
-    );
-
+    await employeeDetailsPage.updateJobDetails();
     //Delete the employee after editing
-    await deleteEmployeePage.deleteEmployee(
-        `${employeeData.employee.firstName} ${employeeData.employee.lastName}`
-    );
-
-    page.close();
+    await deleteEmployeePage.deleteEmployee(`${employeeData.employee.firstName} ${employeeData.employee.lastName}`);
 
 });

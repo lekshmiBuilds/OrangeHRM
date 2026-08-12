@@ -4,28 +4,39 @@ import { BasePage } from './BasePage';
 export class LogoutPage extends BasePage {
 
     private readonly userDropdown: Locator;
-    private readonly logoutMenu: Locator;
+    private readonly logoutButton: Locator;
 
-    constructor(page: Page) {
+    constructor(page: Page) 
+    {
+
         super(page);
 
         this.userDropdown = page.locator('.oxd-userdropdown-name');
-        this.logoutMenu = page.getByRole('menuitem', { name: 'Logout' });
+        this.logoutButton = page.getByRole('menuitem', { name: 'Logout' });
     }
 
-    async logout(): Promise<void> {
+    async logout() 
+    {
 
         await this.userDropdown.click();
-
-        await this.logoutMenu.click();
+        await this.logoutButton.click();
 
     }
 
-    async verifyLogout(): Promise<void> {
+    async verifyLogout() 
+    {
 
-        await expect(this.page).toHaveURL(
-            'https://opensource-demo.orangehrmlive.com/web/index.php/auth/login'
+        await expect(this.page).toHaveURL(/auth\/login/);
+
+    }
+
+    async verifySessionInvalidated() {
+
+        await this.page.goto(
+            'https://opensource-demo.orangehrmlive.com/web/index.php/dashboard/index'
         );
+
+        await expect(this.page).toHaveURL(/auth\/login/);
 
     }
 

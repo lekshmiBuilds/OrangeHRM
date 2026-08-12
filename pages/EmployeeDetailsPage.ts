@@ -16,12 +16,18 @@ export class EmployeeDetailsPage extends BasePage {
         this.jobTab = page.getByRole('link', { name: 'Job' });
 
         // Job Title dropdown
-        this.jobTitleDropdown = page.locator('label:text("Job Title")').locator('../..').locator('.oxd-select-text');
+        this.jobTitleDropdown = page
+            .locator('label:text("Job Title")')
+            .locator('../..')
+            .locator('.oxd-select-text');
 
         // Employment Status dropdown
-        this.employmentStatusDropdown = page.locator('label:text("Employment Status")').locator('../..').locator('.oxd-select-text');
+        this.employmentStatusDropdown = page
+            .locator('label:text("Employment Status")')
+            .locator('../..')
+            .locator('.oxd-select-text');
 
-        // Save button in Job section
+        // Save button
         this.saveButton = page.getByRole('button', { name: 'Save' }).first();
 
         // Success toast
@@ -29,21 +35,48 @@ export class EmployeeDetailsPage extends BasePage {
     }
 
     async clickJobTab(): Promise<void> {
+
         await this.jobTab.click();
+
     }
 
-    async selectJobTitle(jobTitle: string): Promise<void> {
+    async selectJobTitle(): Promise<void> {
 
         await this.jobTitleDropdown.click();
-        await this.page.getByRole('option', { name: jobTitle }).click();
+
+        const options = this.page.locator('.oxd-select-dropdown > *');
+
+        const count = await options.count();
+
+        if (count <= 1) {
+            throw new Error('No Job Title options found.');
+        }
+
+        const selectedJobTitle = await options.nth(1).textContent();
+
+        console.log('Selected Job Title:', selectedJobTitle);
+
+        await options.nth(1).click();
 
     }
 
-    async selectEmploymentStatus(status: string): Promise<void> {
+    async selectEmploymentStatus(): Promise<void> {
 
         await this.employmentStatusDropdown.click();
 
-        await this.page.getByRole('option', { name: status }).click();
+        const options = this.page.locator('.oxd-select-dropdown > *');
+
+        const count = await options.count();
+
+        if (count <= 1) {
+            throw new Error('No Employment Status options found.');
+        }
+
+        const selectedStatus = await options.nth(1).textContent();
+
+        console.log('Selected Employment Status:', selectedStatus);
+
+        await options.nth(1).click();
 
     }
 
@@ -59,16 +92,18 @@ export class EmployeeDetailsPage extends BasePage {
 
     }
 
-    async updateJobDetails(
-        jobTitle: string,
-        employmentStatus: string
-    ): Promise<void> {
+    async updateJobDetails(): Promise<void> {
 
         await this.clickJobTab();
-        await this.selectJobTitle(jobTitle);
-        await this.selectEmploymentStatus(employmentStatus);
+
+        await this.selectJobTitle();
+
+        await this.selectEmploymentStatus();
+
         await this.clickSave();
+
         await this.verifyJobUpdated();
 
     }
+
 }

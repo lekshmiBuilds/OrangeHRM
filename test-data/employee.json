@@ -5,6 +5,6 @@
     "lastName": "Johnson",
     "profilePicture": "./test-data/profile.jpg",
     "jobTitle": "QA Engineer",
-    "employmentStatus": "Full-Time Permanent"
+    "employmentStatus": "Permanent Employee"
   }
 }
