@@ -1,8 +1,9 @@
+playwright-report/
+test-results/
+blob-report/
 
-# Playwright
+allure-results/
+allure-report/
+
 node_modules/
-/test-results/
-/playwright-report/
-/blob-report/
-/playwright/.cache/
-/playwright/.auth/
+.env
