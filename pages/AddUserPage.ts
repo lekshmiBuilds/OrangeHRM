@@ -1,5 +1,6 @@
 import { Locator, expect,Page } from '@playwright/test';
 import { BasePage } from './BasePage';
+import { Messages } from '../constants/Messages';
 
 export class AddUserPage extends BasePage 
 {
@@ -71,12 +72,12 @@ export class AddUserPage extends BasePage
         await this.confirmPasswordInput.fill(password);
     }
 
-    async saveUser(): Promise<void> 
-    {
+     async saveUser(): Promise<void> 
+{
     await this.saveButton.click();    
-    const successToast = this.page.locator('.oxd-toast') .filter({ hasText: /Successfully Saved/i });
-    await successToast.waitFor({state: 'visible',timeout: 10000});
-    }
+    const successToast = this.page.locator('.oxd-toast').filter({ hasText: Messages.SUCCESSFULLY_SAVED });
+    await successToast.waitFor({ state: 'visible', timeout: 10000 });
+}
 
     async verifyAddUserPage(): Promise<void> 
     {

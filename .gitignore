@@ -7,3 +7,4 @@ allure-report/
 
 node_modules/
 .env
+playwright/.auth/

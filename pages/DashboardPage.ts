@@ -1,5 +1,6 @@
 import {Page, expect} from '@playwright/test';
 import { BasePage } from './BasePage';
+import { Routes } from '../constants/Routes';
 
 export class DashboardPage extends BasePage
 {
@@ -10,7 +11,7 @@ export class DashboardPage extends BasePage
 
     async verifyDashboardLoaded() 
     {
-        await expect(this.page).toHaveURL('https://opensource-demo.orangehrmlive.com/web/index.php/dashboard/index')
+        await expect(this.page).toHaveURL(new RegExp(`${Routes.DASHBOARD}$`));
         }
     }
 
