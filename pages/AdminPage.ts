@@ -11,7 +11,7 @@ export class AdminPage extends BasePage {
     private readonly deleteButton: Locator;
     private readonly confirmDeleteButton: Locator;
     private readonly successToast: Locator;
-
+    private readonly resultRows: Locator;
     constructor(page: Page) 
     
     {
@@ -25,6 +25,7 @@ export class AdminPage extends BasePage {
         this.deleteButton = page.locator('button').filter({ has: page.locator('.bi-trash') }).first();
         this.confirmDeleteButton = page.getByRole('button', {name: 'Yes, Delete'});
         this.successToast = page.locator('.oxd-toast');
+        this.resultRows = page.locator('.oxd-table-card');
     }
 
     async navigateToAdmin(): Promise<void> 
@@ -72,11 +73,11 @@ export class AdminPage extends BasePage {
         await expect(this.successToast).toBeVisible();
     }
 
-    async verifyUserDeleted(username: string): Promise<void> 
-    {
-        await this.searchUser(username);
-        await this.page.waitForLoadState('networkidle');
-        await expect(this.resultTable).toContainText('No Records Found');
-    }
+async verifyUserDeleted(username: string): Promise<void> 
+{
+    await this.searchUser(username);
+
+    await expect(this.resultRows).toHaveCount(0, { timeout: 10000 });
+}   
 
 }

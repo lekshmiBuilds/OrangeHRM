@@ -1,13 +1,6 @@
-import { test } from '@playwright/test';
-import { DashboardPage } from '../pages/DashboardPage';
-import { AdminPage } from '../pages/AdminPage';
-import { AddUserPage } from '../pages/AddUserPage';
+import { test, expect } from '../fixtures/fixtures';
 
-test('Admin - Verify Navigation to Add User page', async ({ page }) => {
-
-    const dashboardPage = new DashboardPage(page);
-    const adminPage = new AdminPage(page);
-    const addUserPage = new AddUserPage(page);
+test('Admin - Verify Navigation to Add User page', async ({page, dashboardPage,adminPage, addUserPage }) => {
 
     // Already authenticated using globalSetup + storageState
     await page.goto('/web/index.php/dashboard/index');

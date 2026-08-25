@@ -1,29 +1,27 @@
-import { test } from '@playwright/test';
-import { DashboardPage } from '../../pages/DashboardPage';
-import { PIMPage } from '../../pages/PIMPage';
-import { AddEmployeePage } from '../../pages/AddEmployeePage';
-import { EmployeeDetailsPage } from '../../pages/EmployeeDetailsPage';
-import { DeleteEmployeePage } from '../../pages/DeleteEmployeePage';
+import { test } from '../../fixtures/fixtures';
 import employeeData from '../../test-data/employee.json';
+import { RandomGenerator } from '../../utils/RandomGenerator';
+import { Routes } from '../../constants/Routes';
 
-test('Add Employee, Edit Employee, Delete Employee', async ({ page }) => 
-    {
+test(' @regression Add Employee, Edit Employee, Delete Employee', async ({
+    page,
+    dashboardPage,
+    pimPage,
+    addEmployeePage,
+    employeeDetailsPage,
+    deleteEmployeePage
+}) => {
 
-    const dashboardPage = new DashboardPage(page);
-    const pimPage = new PIMPage(page);
-    const addEmployeePage = new AddEmployeePage(page);
-    const employeeDetailsPage = new EmployeeDetailsPage(page);
-    const deleteEmployeePage = new DeleteEmployeePage(page);
-    const employeeId = Date.now().toString().slice(-6);
-
-    //Login to the application 
-    await page.goto('/web/index.php/dashboard/index');
+    //utils
+    const employeeId = RandomGenerator.generateEmployeeId();
     
+    await page.goto(Routes.DASHBOARD);
+
     await dashboardPage.verifyDashboardLoaded();
+    
+    
     await pimPage.navigateToPIM();
     await pimPage.clickAddEmployee();
-
-    //Add a new employee
     await addEmployeePage.addEmployee(
         employeeData.employee.firstName,
         employeeData.employee.middleName,
@@ -32,9 +30,9 @@ test('Add Employee, Edit Employee, Delete Employee', async ({ page }) =>
         employeeData.employee.profilePicture
     );
 
-    //Edit the employee's job details 
     await employeeDetailsPage.updateJobDetails();
-    //Delete the employee after editing
-    await deleteEmployeePage.deleteEmployee(`${employeeData.employee.firstName} ${employeeData.employee.lastName}`);
+    await deleteEmployeePage.deleteEmployee(
+        `${employeeData.employee.firstName} ${employeeData.employee.lastName}`
+    );
 
 });

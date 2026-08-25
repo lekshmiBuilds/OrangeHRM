@@ -1,6 +1,6 @@
 import { expect, Locator, Page } from '@playwright/test';
 import { BasePage } from './BasePage';
-
+import { Messages } from '../constants/Messages';
 export class DeleteEmployeePage extends BasePage 
 {
     private readonly employeeListTab: Locator;
@@ -27,6 +27,8 @@ export class DeleteEmployeePage extends BasePage
     async navigateToEmployeeList(): Promise<void> 
     {
         await this.employeeListTab.click();
+        await this.page.waitForURL('**/viewEmployeeList');
+        console.log("After navigation:", this.page.url());
     }
     async searchEmployee(employeeName: string): Promise<void> 
     {
@@ -47,7 +49,8 @@ export class DeleteEmployeePage extends BasePage
     }
     async verifyEmployeeDeleted(): Promise<void> 
     {
-        await expect(this.successToast).toContainText('Successfully Deleted');
+        const successToast = this.page.locator('.oxd-toast').filter({ hasText: Messages.SUCCESSFULLY_DELETED });
+        await successToast.waitFor({ state: 'visible', timeout: 10000 });
     }
     async deleteEmployee(employeeName: string): Promise<void> 
     {

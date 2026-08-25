@@ -1,4 +1,6 @@
 import { defineConfig, devices } from '@playwright/test';
+import dotenv from 'dotenv';
+dotenv.config();
 
 export default defineConfig({
 
@@ -13,8 +15,8 @@ export default defineConfig({
 
   use: {
 
-    baseURL: 'https://opensource-demo.orangehrmlive.com',
-    headless: false,
+    baseURL: process.env.ORANGEHRM_BASE_URL,
+    headless: process.env.CI ? true : false,
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
     trace: 'retain-on-failure'
