@@ -4,17 +4,17 @@
 
 ## 📌 Project Overview
 
-This project is an end-to-end UI and API automation framework built using **Playwright** with **TypeScript**, following the **Page Object Model (POM)** design pattern.
+This is an end-to-end UI and API automation framework built using **Playwright** with **TypeScript** for the OrangeHRM application.
 
-The framework automates key OrangeHRM workflows such as user authentication, employee management, admin user management, logout, dashboard validation, and authenticated API validation while following clean coding practices, reusable components, and modular architecture.
+The framework follows the **Page Object Model (POM)** design pattern and focuses on clean architecture, reusable components, maintainability, and scalable test automation practices.
 
-The framework uses **Global Setup** together with **Playwright Storage State** to authenticate once before test execution and reuse the authenticated session across applicable tests.
+It includes automated coverage for authentication, dashboard validation, employee management, admin user management, logout, and authenticated API validation.
 
-It also includes **GitHub Actions CI integration** to automatically execute smoke tests on push and pull request events.
+The framework also includes **GitHub Actions CI integration** to run smoke tests automatically on push and pull request events.
 
 ---
 
-# 🚀 Tech Stack
+## 🚀 Tech Stack
 
 - Playwright
 - TypeScript
@@ -25,14 +25,13 @@ It also includes **GitHub Actions CI integration** to automatically execute smok
 
 ---
 
-# 📂 Project Structure
+## 📂 Project Structure
 
 ```text
 OrangeHRM
 │
-├── .github
-│   └── workflows
-│       └── playwright-smoke.yml
+├── .github/workflows
+│   └── playwright-smoke.yml
 │
 ├── constants
 │   ├── Routes.ts
@@ -55,20 +54,10 @@ OrangeHRM
 │
 ├── tests
 │   ├── Authentication
-│   │   ├── loginpage.spec.ts
-│   │   └── logout.spec.ts
-│   │
 │   ├── Admin
-│   │   └── adduser.spec.ts
-│   │
 │   ├── Employee E2E
-│   │   └── addeditdeleteEmployee.spec.ts
-│   │
 │   ├── API
-│   │   └── apiValidation.spec.ts
-│   │
 │   └── Smoke
-│       └── dashboard.spec.ts
 │
 ├── test-data
 │   ├── login.json
@@ -78,10 +67,6 @@ OrangeHRM
 │
 ├── utils
 │   └── RandomGenerator.ts
-│
-├── playwright
-│   └── .auth
-│       └── user.json   # generated at runtime
 │
 ├── global-setup.ts
 ├── playwright.config.ts
@@ -94,173 +79,39 @@ OrangeHRM
 
 ---
 
-# 🏗 Framework Design
+## 🏗 Framework Highlights
 
-This framework follows the **Page Object Model (POM)** design pattern.
+- Page Object Model design pattern
+- Reusable Base Page
+- Playwright fixtures for page object initialization
+- Global Setup with Storage State authentication
+- Environment configuration using `.env`
+- External JSON test data
+- Reusable constants and utility classes
+- Dynamic employee ID and username generation
+- Smoke and regression test tagging
+- UI automation and authenticated API validation
+- GitHub Actions CI integration
+- HTML reporting with screenshots, videos, and traces on failure
+---
 
-- Each page is implemented as an individual Page Object class.
-- Every page contains only the locators and methods related to that page.
-- A reusable **BasePage** provides common functionality shared across multiple pages.
-- Test data is externalized using JSON files.
-- Reusable constants are maintained separately for routes and UI messages.
-- Utility methods are used for dynamic test data generation.
-- Playwright fixtures are used for reusable page object initialization.
-- Authentication is handled centrally using **Global Setup** and **Storage State**, reducing repeated login steps.
+## ✅ Automated Coverage
 
-This structure improves:
-
-- Code reusability
-- Maintainability
-- Scalability
-- Readability
-- Separation of concerns
+- Authentication
+- Dashboard validation
+- Admin user management
+- Employee lifecycle flow
+- Logout and session validation
+- Authenticated API validation
 
 ---
 
-# 🔐 Authentication
+## 🔁 GitHub Actions CI
 
-The framework uses **Global Setup** together with **Playwright Storage State**.
+The project includes a GitHub Actions workflow to run smoke tests automatically on:
 
-Before the test suite starts:
-
-1. `global-setup.ts` launches the browser.
-2. Logs into OrangeHRM.
-3. Stores the authenticated session inside:
-
-```text
-playwright/.auth/user.json
-```
-
-All subsequent UI tests reuse this authentication state, avoiding repeated login and improving execution speed.
-
-The authentication state file is generated at runtime and should not be committed to the repository.
-
----
-
-# ⚙️ Environment Configuration
-
-The framework supports environment-specific configuration using `.env` for local execution.
-
-Example `.env` values:
-
-```text
-ORANGEHRM_BASE_URL=
-ORANGEHRM_USERNAME=
-ORANGEHRM_PASSWORD=
-```
-
-For security, the actual `.env` file is excluded from Git using `.gitignore`.
-
-In GitHub Actions, these values are managed using GitHub repository secrets:
-
-```text
-ORANGEHRM_BASE_URL
-ORANGEHRM_USERNAME
-ORANGEHRM_PASSWORD
-```
-
-This keeps sensitive or environment-specific values outside the codebase.
-
----
-
-# ✅ Automated Test Scenarios
-
-## Authentication
-
-- Login with valid credentials
-- Verify successful login
-- Logout
-- Verify successful logout
-- Validate session invalidation after logout
-
----
-
-## Dashboard
-
-- Validate dashboard page loads successfully
-- Smoke test coverage for dashboard validation
-
----
-
-## Admin Module
-
-- Navigate to Admin module
-- Add user
-- Search user
-- Delete user
-- Verify user deletion
-
----
-
-## Employee Module / PIM
-
-- Navigate to PIM module
-- Add employee
-- Upload profile picture
-- Verify employee creation
-- Edit employee job details
-- Delete employee
-- Verify employee deletion
-
----
-
-## API Validation
-
-- Validate dashboard API
-- Execute authenticated API request using browser session
-- Validate HTTP status code
-- Validate API response data
-
----
-
-# 🧪 Test Tags
-
-The framework supports test tagging for selective execution.
-
-## Smoke Tests
-
-Smoke tests validate critical application functionality.
-
-```bash
-npx playwright test --grep "@smoke"
-```
-
-## Regression Tests
-
-Regression tests validate deeper business workflows.
-
-```bash
-npx playwright test --grep "@regression"
-```
-
-This helps separate quick CI validation from broader functional test execution.
-
----
-
-# 📄 Test Data
-
-Test data is maintained separately under the **test-data** folder.
-
-```text
-login.json
-users.json
-employee.json
-profile.jpg
-```
-
-Benefits:
-
-- No hardcoded test data inside specs
-- Easy maintenance
-- Reusable data
-- Better scalability
-- Cleaner test logic
-
----
-
-# 🔁 GitHub Actions CI
-
-This framework includes a GitHub Actions workflow for smoke test execution.
+- Push
+- Pull request
 
 Workflow file:
 
@@ -268,62 +119,15 @@ Workflow file:
 .github/workflows/playwright-smoke.yml
 ```
 
-The workflow runs automatically on:
-
-- Push
-- Pull request
-
-The CI pipeline performs the following steps:
-
-1. Checks out the repository
-2. Sets up Node.js
-3. Installs project dependencies using `npm ci`
-4. Installs Playwright browsers and dependencies
-5. Runs Playwright smoke tests using the `@smoke` tag
-6. Uploads the Playwright report as a workflow artifact when available
-
-Smoke test command used in CI:
+Smoke tests can be executed using:
 
 ```bash
 npx playwright test --grep "@smoke"
 ```
 
-The workflow uses GitHub repository secrets for environment-specific values.
-
 ---
 
-# 📊 Reporting
-
-The framework generates:
-
-- HTML report
-- Screenshots on failure
-- Video recording on failure
-- Trace files on failure
-
-View the HTML report using:
-
-```bash
-npx playwright show-report
-```
-
-In GitHub Actions, the Playwright report is uploaded as an artifact when available.
-
----
-
-# ▶️ Installation
-
-Clone the repository:
-
-```bash
-git clone https://github.com/lekshmiBuilds/OrangeHRM.git
-```
-
-Navigate to the project:
-
-```bash
-cd OrangeHRM
-```
+## ▶️ Installation
 
 Install dependencies:
 
@@ -339,65 +143,33 @@ npx playwright install
 
 ---
 
-# ▶️ Execute Tests
+## ▶️ Execute Tests
 
-## Execute All Tests
+Run all tests:
 
 ```bash
 npx playwright test
 ```
 
----
-
-## Execute Smoke Tests
+Run smoke tests:
 
 ```bash
 npx playwright test --grep "@smoke"
 ```
 
----
-
-## Execute Regression Tests
+Run regression tests:
 
 ```bash
 npx playwright test --grep "@regression"
 ```
 
----
-
-## Execute Login Test
-
-```bash
-npx playwright test tests/Authentication/loginpage.spec.ts
-```
-
----
-
-## Execute Logout Test
-
-```bash
-npx playwright test tests/Authentication/logout.spec.ts
-```
-
----
-
-## Execute Admin Test
-
-```bash
-npx playwright test tests/Admin/adduser.spec.ts
-```
-
----
-
-## Execute Employee E2E Test
+Run employee E2E test:
 
 ```bash
 npx playwright test "tests/Employee E2E/addeditdeleteEmployee.spec.ts"
 ```
 
----
-
-## Execute API Validation Test
+Run API validation test:
 
 ```bash
 npx playwright test tests/API/apiValidation.spec.ts
@@ -405,107 +177,52 @@ npx playwright test tests/API/apiValidation.spec.ts
 
 ---
 
-# 📈 View HTML Report
+## 📊 Reporting
+
+View the Playwright HTML report:
 
 ```bash
 npx playwright show-report
 ```
 
----
-
-# ⭐ Features Implemented
-
-- Playwright with TypeScript
-- Page Object Model
-- Base Page
-- Global Setup
-- Storage State Authentication
-- External JSON test data
-- Dynamic employee ID generation
-- Dynamic username generation
-- Reusable utility class
-- Reusable constants for routes and UI messages
-- Playwright fixtures for page object initialization
-- UI automation
-- API validation using authenticated browser session
-- Smoke and regression test tagging
-- GitHub Actions CI workflow
-- Smoke test execution in CI
-- Repository secrets for CI environment values
-- Environment configuration using `.env`
-- Headless execution support in CI
-- HTML reporting
-- Screenshot capture on failure
-- Video recording on failure
-- Trace collection on failure
-- Modular project structure
-- Reusable methods
+The framework captures screenshots, videos, and trace files on failure.
 
 ---
 
-# 📦 Dependencies
+## 🔮 Future Enhancements
 
-Major dependencies used:
-
-- `@playwright/test`
-- `dotenv`
-- `@types/node`
-
-Install all dependencies using:
-
-```bash
-npm install
-```
-
----
-
-# 🔮 Future Enhancements
-
-- Cross-browser execution using Firefox and WebKit
-- Parallel execution optimization
 - Allure Reporting
-- Data-driven execution using CSV or Excel
-- Additional API automation scenarios
+- Cross-browser execution using Firefox and WebKit
 - Manual regression workflow in GitHub Actions
-- Enhanced test reporting in CI
-- More end-to-end business workflow coverage
+- GitHub Actions browser matrix execution
+- Additional API automation scenarios
+- Enhanced CI reporting
 
 ---
 
-# 📌 Project Progress
+## 📌 Project Progress
 
-## 25 Aug 2026
+### 25 Aug 2026
 
-Implemented the following framework enhancements:
-
-- Added GitHub Actions CI workflow for Playwright smoke test execution
-- Configured CI to run on push and pull request events
-- Added repository secrets for environment-specific values
-- Updated Playwright configuration to support headless execution in CI
-- Added `.env` support using `dotenv` for local environment configuration
-- Added reusable constants for routes and UI messages
+Latest framework updates:
+- Integrated GitHub Actions CI workflow
+- Configured smoke tests to run on push and pull request events
+- Added GitHub repository secrets for environment-specific values
+- Updated Playwright execution for CI-safe headless mode
+- Added reusable Playwright fixtures for page object initialization
+- Added constants for routes and UI messages
 - Added utility class for dynamic test data generation
-- Added Playwright fixtures for reusable page object initialization
-- Added smoke and regression tags for selective test execution
+- Added smoke and regression test tags for selective execution
 - Added dashboard smoke test for CI validation
-- Created a pull request and verified successful GitHub Actions execution
+- Updated README with CI badge and project progress
 
 ---
 
-# 👩‍💻 Author
+## 👩‍💻 Author
 
 **Lekshmi Mahadevan**
+**Skills:** Playwright · TypeScript · UI Automation · API Testing · Page Object Model · Test Automation Framework Development · GitHub Actions · CI/CD
 
 Automation QA Engineer
 
-## Skills
-
-- Playwright
-- TypeScript
-- UI Automation
-- API Testing
-- End-to-End Automation
-- Page Object Model
-- Test Automation Framework Development
-- GitHub Actions
-- CI/CD
+**Skills:** Playwright · TypeScript · UI Automation · API Testing · Page Object Model · Test Automation Framework Development · GitHub Actions · CI/CD
