@@ -221,8 +221,6 @@ Latest framework updates:
 ## 👩‍💻 Author
 
 **Lekshmi Mahadevan**
-**Skills:** Playwright · TypeScript · UI Automation · API Testing · Page Object Model · Test Automation Framework Development · GitHub Actions · CI/CD
-
 Automation QA Engineer
 
 **Skills:** Playwright · TypeScript · UI Automation · API Testing · Page Object Model · Test Automation Framework Development · GitHub Actions · CI/CD
