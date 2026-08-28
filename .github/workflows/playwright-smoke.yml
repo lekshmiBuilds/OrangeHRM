@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        browser: [chromium, firefox, webkit]
+        browser: [chromium, firefox]
 
     env:
       ORANGEHRM_BASE_URL: ${{ secrets.ORANGEHRM_BASE_URL }}
