@@ -32,7 +32,30 @@ projects: [
         ...devices['Desktop Chrome'],
         storageState: 'playwright/.auth/user.json'
     }
-}
+},
+  {
+    name: 'firefox',
+    use: {
+      ...devices['Desktop Firefox'],
+      storageState: 'playwright/.auth/user.json'
+    }
+  },
+
+{
+  name: 'mobile-chrome',
+  use: {
+    ...devices['Pixel 5'],
+    storageState: 'playwright/.auth/user.json'
+  }
+},
+
+  {
+    name: 'mobile-safari',
+    use: {
+      ...devices['iPhone 13'],
+      storageState: 'playwright/.auth/user.json'
+    }
+  }
 
 ]
 
