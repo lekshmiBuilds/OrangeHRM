@@ -11,6 +11,8 @@
   "devDependencies": {
     "@playwright/test": "^1.62.1",
     "@types/node": "^26.3.0",
+    "allure-commandline": "^2.43.0",
+    "allure-playwright": "^3.11.0",
     "dotenv": "^17.4.2"
   },
   "directories": {
