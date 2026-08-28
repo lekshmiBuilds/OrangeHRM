@@ -9,8 +9,11 @@ export default defineConfig({
   forbidOnly: false,
   retries: 0,
   workers: 1,
-  reporter: 'html',
-
+  reporter: 
+  [
+    ['html'],
+    ['allure-playwright']
+  ],
   globalSetup: './global-setup.ts',
 
   use: {
