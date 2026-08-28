@@ -9,6 +9,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 60
 
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, firefox, webkit]
+
     env:
       ORANGEHRM_BASE_URL: ${{ secrets.ORANGEHRM_BASE_URL }}
       ORANGEHRM_USERNAME: ${{ secrets.ORANGEHRM_USERNAME }}
@@ -30,13 +35,13 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
-      - name: Run smoke tests
-        run: npx playwright test --grep "@smoke"
+      - name: Run smoke tests on ${{ matrix.browser }}
+        run: npx playwright test --grep "@smoke" --project=${{ matrix.browser }}
 
       - name: Upload Playwright report
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v5
         with:
-          name: playwright-report
+          name: playwright-report-${{ matrix.browser }}
           path: playwright-report/
           retention-days: 30
