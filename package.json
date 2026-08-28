@@ -3,7 +3,15 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+"scripts": 
+{
+  "test": "npx playwright test",
+  "test:smoke": "npx playwright test --grep \"@smoke\"",
+  "test:regression": "npx playwright test --grep \"@regression\"",
+  "report:html": "npx playwright show-report",
+  "report:allure:generate": "npx allure-commandline generate allure-results --clean -o allure-report",
+  "report:allure:open": "npx allure-commandline open allure-report"
+},
   "keywords": [],
   "author": "",
   "license": "ISC",
