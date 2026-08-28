@@ -22,6 +22,7 @@ The framework also includes **GitHub Actions CI integration** to run smoke tests
 - Playwright Test Runner
 - GitHub Actions
 - dotenv
+- Allure Reporting
 
 ---
 
@@ -31,7 +32,8 @@ The framework also includes **GitHub Actions CI integration** to run smoke tests
 OrangeHRM
 │
 ├── .github/workflows
-│   └── playwright-smoke.yml
+│   ├── playwright-smoke.yml
+│   └── playwright-regression.yml
 │
 ├── constants
 │   ├── Routes.ts
@@ -91,8 +93,14 @@ OrangeHRM
 - Dynamic employee ID and username generation
 - Smoke and regression test tagging
 - UI automation and authenticated API validation
-- GitHub Actions CI integration
 - HTML reporting with screenshots, videos, and traces on failure
+- Allure Reporting support
+- Cross-browser execution with Chromium, Firefox, and WebKit
+- Mobile device emulation using Playwright device profiles
+- GitHub Actions CI integration
+- GitHub Actions browser matrix for smoke tests
+- Manual regression workflow using GitHub Actions
+
 ---
 
 ## ✅ Automated Coverage
@@ -108,7 +116,11 @@ OrangeHRM
 
 ## 🔁 GitHub Actions CI
 
-The project includes a GitHub Actions workflow to run smoke tests automatically on:
+The project includes GitHub Actions workflows for smoke and regression test execution.
+
+### Smoke Test Workflow
+
+Smoke tests run automatically on:
 
 - Push
 - Pull request
@@ -119,10 +131,31 @@ Workflow file:
 .github/workflows/playwright-smoke.yml
 ```
 
-Smoke tests can be executed using:
+The smoke workflow runs tests using a browser matrix for:
+
+- Chromium
+- Firefox
+
+Smoke test command:
 
 ```bash
 npx playwright test --grep "@smoke"
+```
+
+### Manual Regression Workflow
+
+Regression tests can be triggered manually from GitHub Actions using `workflow_dispatch`.
+
+Workflow file:
+
+```text
+.github/workflows/playwright-regression.yml
+```
+
+Regression test command:
+
+```bash
+npx playwright test --grep "@regression" --project=chromium
 ```
 
 ---
@@ -163,6 +196,21 @@ Run regression tests:
 npx playwright test --grep "@regression"
 ```
 
+Run tests on a specific browser:
+
+```bash
+npx playwright test --project=chromium
+npx playwright test --project=firefox
+npx playwright test --project=webkit
+```
+
+Run mobile emulation smoke tests:
+
+```bash
+npx playwright test --grep "@smoke" --project=mobile-chrome
+npx playwright test --grep "@smoke" --project=mobile-safari
+```
+
 Run employee E2E test:
 
 ```bash
@@ -185,18 +233,30 @@ View the Playwright HTML report:
 npx playwright show-report
 ```
 
+Generate Allure report:
+
+```bash
+npx allure-commandline generate allure-results --clean -o allure-report
+```
+
+Open Allure report:
+
+```bash
+npx allure-commandline open allure-report
+```
+
 The framework captures screenshots, videos, and trace files on failure.
 
 ---
 
 ## 🔮 Future Enhancements
 
-- Allure Reporting
-- Cross-browser execution using Firefox and WebKit
-- Manual regression workflow in GitHub Actions
-- GitHub Actions browser matrix execution
 - Additional API automation scenarios
 - Enhanced CI reporting
+- Docker support
+- Test data cleanup strategy
+- Logger utility
+- Test annotations and test case metadata
 
 ---
 
@@ -204,7 +264,8 @@ The framework captures screenshots, videos, and trace files on failure.
 
 ### 25 Aug 2026
 
-Latest framework updates:
+Phase 2 updates:
+
 - Integrated GitHub Actions CI workflow
 - Configured smoke tests to run on push and pull request events
 - Added GitHub repository secrets for environment-specific values
@@ -216,11 +277,25 @@ Latest framework updates:
 - Added dashboard smoke test for CI validation
 - Updated README with CI badge and project progress
 
+### 28 Aug 2026
+
+Phase 3 updates:
+
+- Added Allure Reporting support
+- Generated and opened Allure reports locally
+- Added cross-browser execution for Chromium, Firefox, and WebKit
+- Added mobile device emulation support using Playwright device profiles
+- Added GitHub Actions browser matrix for smoke tests
+- Configured Chromium and Firefox smoke tests in CI
+- Added browser-specific Playwright report artifacts
+- Added manual regression workflow using GitHub Actions
+- Configured manual regression execution using `workflow_dispatch`
+
 ---
 
 ## 👩‍💻 Author
 
 **Lekshmi Mahadevan**
-Automation QA Engineer
 
+Automation QA Engineer
 **Skills:** Playwright · TypeScript · UI Automation · API Testing · Page Object Model · Test Automation Framework Development · GitHub Actions · CI/CD
