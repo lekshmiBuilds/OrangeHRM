@@ -16,10 +16,7 @@ test(' @regression Add Employee, Edit Employee, Delete Employee', async ({
     const employeeId = RandomGenerator.generateEmployeeId();
     
     await page.goto(Routes.DASHBOARD);
-
     await dashboardPage.verifyDashboardLoaded();
-    
-    
     await pimPage.navigateToPIM();
     await pimPage.clickAddEmployee();
     await addEmployeePage.addEmployee(
