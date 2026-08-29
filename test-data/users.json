@@ -1,15 +1,8 @@
 {
   "adminUser": {
     "role": "Admin",
-    "employeeName": "Manda Manda",
     "status": "Enabled",
-    "password": "Password@123"
-  },
-
-  "essUser": {
-    "role": "ESS",
-    "employeeName": "Do not Delete",
-    "status": "Enabled",
-    "password": "Password@123"
+    "password": "Test@123"
   }
 }
+
