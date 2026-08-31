@@ -297,8 +297,33 @@ The framework captures screenshots, videos, and trace files on failure.
 - Validated API tests as part of regression execution
 ---
 
+---
+
+## 🤝 Contributions
+
+This is a personal QA/SDET portfolio project created for learning, practice, and showcasing automation framework development skills.
+Suggestions, feedback, and improvements are welcome. If you would like to contribute:
+
+- Fork the repository
+- Create a new feature branch
+- Make your changes
+- Raise a pull request with a clear description
+
+Please ensure that any contribution follows clean coding practices and maintains the existing framework structure.
+
+---
+
+## 📜 Copyright and Usage
+
+This project is created and maintained by **Lekshmi Mahadevan** as part of a personal automation testing portfolio.
+You are welcome to refer to this repository for learning and educational purposes. Please do not copy, republish, or claim this project as your own work without proper credit.
+If you use any part of this framework as a reference, kindly provide appropriate attribution to the original repository.
+
+---
+
 ## 👩‍💻 Author
 
 **Lekshmi Mahadevan**
 Automation QA Engineer
+
 **Skills:** Playwright · TypeScript · UI Automation · API Testing · Page Object Model · Test Automation Framework Development · GitHub Actions · CI/CD
