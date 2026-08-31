@@ -1,4 +1,5 @@
 import { Page } from '@playwright/test';
+import { ApiEndpoints } from './ApiEndpoints';
 
 type DashboardEmployeeActionSummaryResponse = {
     status: number;
@@ -15,14 +16,14 @@ export class OrangeHrmApiClient {
     }
 
     async getDashboardEmployeeActionSummary(): Promise<DashboardEmployeeActionSummaryResponse> {
-        const response = await this.page.evaluate(async () => {
-            const res = await fetch('/web/index.php/api/v2/dashboard/employees/action-summary');
+        const response = await this.page.evaluate(async (endpoint) => {
+            const res = await fetch(endpoint);
 
             return {
                 status: res.status,
                 body: await res.json()
             };
-        });
+        }, ApiEndpoints.DASHBOARD_EMPLOYEE_ACTION_SUMMARY);
 
         return response;
     }
