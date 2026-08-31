@@ -1,3 +1,6 @@
+Use this as your **complete updated `README.md`**:
+
+````md
 [![Playwright Smoke Tests](https://github.com/lekshmiBuilds/OrangeHRM/actions/workflows/playwright-smoke.yml/badge.svg?branch=feature/orangehrm_11Aug26)](https://github.com/lekshmiBuilds/OrangeHRM/actions/workflows/playwright-smoke.yml)
 
 # OrangeHRM Playwright Automation Framework
@@ -34,6 +37,10 @@ OrangeHRM
 ├── .github/workflows
 │   ├── playwright-smoke.yml
 │   └── playwright-regression.yml
+│
+├── api
+│   ├── ApiEndpoints.ts
+│   └── OrangeHrmApiClient.ts
 │
 ├── constants
 │   ├── Routes.ts
@@ -93,6 +100,9 @@ OrangeHRM
 - Dynamic employee ID and username generation
 - Smoke and regression test tagging
 - UI automation and authenticated API validation
+- API client layer for reusable API request handling
+- Reusable API endpoint constants
+- TypeScript response typing for API validation
 - HTML reporting with screenshots, videos, and traces on failure
 - Allure Reporting support
 - Cross-browser execution with Chromium, Firefox, and WebKit
@@ -110,7 +120,7 @@ OrangeHRM
 - Admin user management
 - Employee lifecycle flow
 - Logout and session validation
-- Authenticated API validation
+- Authenticated API validation using reusable API client
 
 ---
 
@@ -251,7 +261,7 @@ The framework captures screenshots, videos, and trace files on failure.
 
 ## 🔮 Future Enhancements
 
-- Additional API automation scenarios
+- Additional API validation scenarios
 - Enhanced CI reporting
 - Docker support
 - Test data cleanup strategy
@@ -264,7 +274,7 @@ The framework captures screenshots, videos, and trace files on failure.
 
 ### 25 Aug 2026
 
-Phase 2 updates:
+Latest framework updates:
 
 - Integrated GitHub Actions CI workflow
 - Configured smoke tests to run on push and pull request events
@@ -291,6 +301,17 @@ Phase 3 updates:
 - Added manual regression workflow using GitHub Actions
 - Configured manual regression execution using `workflow_dispatch`
 
+### 31 Aug 2026
+
+Phase 4 API updates:
+
+- Refactored API validation using a reusable API client
+- Moved dashboard API request logic out of the spec file
+- Added stronger API response assertions
+- Added TypeScript response typing for API validation
+- Added reusable API endpoint constants
+- Validated API tests as part of regression execution
+
 ---
 
 ## 👩‍💻 Author
@@ -299,3 +320,4 @@ Phase 3 updates:
 
 Automation QA Engineer
 **Skills:** Playwright · TypeScript · UI Automation · API Testing · Page Object Model · Test Automation Framework Development · GitHub Actions · CI/CD
+````
