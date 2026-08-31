@@ -262,9 +262,7 @@ The framework captures screenshots, videos, and trace files on failure.
 
 ## 📌 Project Progress
 
-### 25 Aug 2026
-
-Phase 2 updates:
+### 25 Aug 2026 : Phase 2 updates:
 
 - Integrated GitHub Actions CI workflow
 - Configured smoke tests to run on push and pull request events
@@ -277,9 +275,7 @@ Phase 2 updates:
 - Added dashboard smoke test for CI validation
 - Updated README with CI badge and project progress
 
-### 28 Aug 2026
-
-Phase 3 updates:
+### 28 Aug 2026 : Phase 3 updates:
 
 - Added Allure Reporting support
 - Generated and opened Allure reports locally
@@ -291,11 +287,18 @@ Phase 3 updates:
 - Added manual regression workflow using GitHub Actions
 - Configured manual regression execution using `workflow_dispatch`
 
+### 31 Aug 2026 : Phase 4 API updates:
+
+- Refactored API validation using a reusable API client
+- Moved dashboard API request logic out of the spec file
+- Added stronger API response assertions
+- Added TypeScript response typing for API validation
+- Added reusable API endpoint constants
+- Validated API tests as part of regression execution
 ---
 
 ## 👩‍💻 Author
 
 **Lekshmi Mahadevan**
-
 Automation QA Engineer
 **Skills:** Playwright · TypeScript · UI Automation · API Testing · Page Object Model · Test Automation Framework Development · GitHub Actions · CI/CD
