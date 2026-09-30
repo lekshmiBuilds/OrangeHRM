@@ -1,6 +1,3 @@
-Use this as your **complete updated `README.md`**:
-
-````md
 [![Playwright Smoke Tests](https://github.com/lekshmiBuilds/OrangeHRM/actions/workflows/playwright-smoke.yml/badge.svg?branch=feature/orangehrm_11Aug26)](https://github.com/lekshmiBuilds/OrangeHRM/actions/workflows/playwright-smoke.yml)
 
 # OrangeHRM Playwright Automation Framework
@@ -15,6 +12,8 @@ It includes automated coverage for authentication, dashboard validation, employe
 
 The framework also includes **GitHub Actions CI integration** to run smoke tests automatically on push and pull request events.
 
+In addition to test automation, this project includes a **LangGraph TypeScript-based AI QA Review Agent** that reviews selected framework files and generates an AI-assisted QA review report.
+
 ---
 
 ## 🚀 Tech Stack
@@ -26,6 +25,9 @@ The framework also includes **GitHub Actions CI integration** to run smoke tests
 - GitHub Actions
 - dotenv
 - Allure Reporting
+- LangGraph
+- LangChain
+- OpenAI API
 
 ---
 
@@ -77,6 +79,20 @@ OrangeHRM
 ├── utils
 │   └── RandomGenerator.ts
 │
+├── ai-agent-ts
+│   ├── src
+│   │   ├── main.ts
+│   │   ├── graph.ts
+│   │   ├── state.ts
+│   │   └── prompts.ts
+│   ├── reports
+│   ├── .env.example
+│   ├── .gitignore
+│   ├── package.json
+│   ├── package-lock.json
+│   ├── tsconfig.json
+│   └── README.md
+│
 ├── global-setup.ts
 ├── playwright.config.ts
 ├── package.json
@@ -110,6 +126,7 @@ OrangeHRM
 - GitHub Actions CI integration
 - GitHub Actions browser matrix for smoke tests
 - Manual regression workflow using GitHub Actions
+- LangGraph TypeScript AI QA Review Agent
 
 ---
 
@@ -121,6 +138,87 @@ OrangeHRM
 - Employee lifecycle flow
 - Logout and session validation
 - Authenticated API validation using reusable API client
+
+---
+
+## 🤖 AI QA Review Agent
+
+This framework includes a **LangGraph TypeScript-based QA review agent** under the `ai-agent-ts` folder.
+The agent reviews selected Playwright TypeScript framework files and generates an AI-assisted Markdown report with file-level and framework-level feedback.
+The agent is designed to support framework review, maintainability analysis, and interview preparation.
+
+### What the Agent Does
+
+- Reads selected Playwright TypeScript framework files
+- Classifies files by type, such as test spec, page object, fixture, API client, and API endpoint file
+- Runs TypeScript syntax diagnostics before AI review
+- Generates file-level QA feedback
+- Generates framework-level summary
+- Identifies maintainability, reliability, API validation, fixture, and flaky test risks
+- Produces an interview-friendly explanation
+- Generates a Markdown review report
+
+### AI Agent Workflow
+
+```text
+Input framework files
+        ↓
+Classify file type
+        ↓
+Run TypeScript syntax diagnostics
+        ↓
+Generate file-level QA review
+        ↓
+Generate framework-level summary
+        ↓
+Create Markdown review report
+```
+
+### AI Agent Tech Stack
+
+- TypeScript
+- LangGraph
+- LangChain
+- OpenAI API
+- Node.js
+
+### Run the AI Agent
+
+Navigate to the agent folder:
+
+```bash
+cd ai-agent-ts
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Create a `.env` file using `.env.example` as reference:
+
+```bash
+OPENAI_API_KEY=your_api_key_here
+```
+
+Run the agent:
+
+```bash
+npm start
+```
+
+The report will be generated under:
+
+```text
+ai-agent-ts/reports/framework-review-report.md
+```
+
+### AI Review Disclaimer
+
+The generated report is AI-assisted. Recommendations should be reviewed by an engineer before implementation.
+
+The agent is used as a QA review assistant and not as an automatic source of truth.
 
 ---
 
@@ -263,10 +361,13 @@ The framework captures screenshots, videos, and trace files on failure.
 
 - Additional API validation scenarios
 - Enhanced CI reporting
-- Docker support
+- Docker support for consistent local and CI execution
 - Test data cleanup strategy
-- Logger utility
+- Logger utility for better debugging
 - Test annotations and test case metadata
+- AI-assisted test failure analysis
+- Human-approved AI fix suggestions for failed tests
+- Change impact analysis using LangGraph
 
 ---
 
@@ -301,7 +402,7 @@ Phase 3 updates:
 - Added manual regression workflow using GitHub Actions
 - Configured manual regression execution using `workflow_dispatch`
 
-### 31 Aug 2026
+### 30 Aug 2026
 
 Phase 4 API updates:
 
@@ -312,13 +413,35 @@ Phase 4 API updates:
 - Added reusable API endpoint constants
 - Validated API tests as part of regression execution
 
+### 15 Sep 2026
+
+Phase 5 AI QA Review Agent updates:
+
+- Added LangGraph TypeScript QA review agent
+- Added file-level framework review workflow
+- Added framework-level summary generation
+- Added TypeScript syntax diagnostics before AI review
+- Added AI-assisted Markdown report generation
+- Added AI review disclaimer
+- Added agent documentation under `ai-agent-ts`
+- Added support for reviewing Playwright specs, page objects, fixtures, API clients, and endpoint constants
+
 ---
-## 🤝 Website : https://opensource-demo.orangehrmlive.com/web/index.php/auth/login
+
+## 🌐 Website
+
+OrangeHRM demo application:
+
+```text
+https://opensource-demo.orangehrmlive.com/web/index.php/auth/login
+```
+
 ---
 
 ## 🤝 Contributions
 
 This is a personal QA/SDET portfolio project created for learning, practice, and showcasing automation framework development skills.
+
 Suggestions, feedback, and improvements are welcome. If you would like to contribute:
 
 - Fork the repository
@@ -344,5 +467,4 @@ If you use any part of this framework as a reference, kindly provide appropriate
 
 Automation QA Engineer
 
-**Skills:** Playwright · TypeScript · UI Automation · API Testing · Page Object Model · Test Automation Framework Development · GitHub Actions · CI/CD
-````
+**Skills:** Playwright · TypeScript · UI Automation · API Testing · Page Object Model · Test Automation Framework Development · GitHub Actions · CI/CD · LangGraph · AI-assisted QA Review
