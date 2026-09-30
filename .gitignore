@@ -8,3 +8,7 @@ allure-report/
 node_modules/
 .env
 playwright/.auth/
+
+ai-agent-ts/.env
+ai-agent-ts/node_modules/
+ai-agent-ts/reports/
